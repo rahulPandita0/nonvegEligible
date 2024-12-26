@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today's Date and Message</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            margin: 10px 0;
+            color: #333;
+        }
+        p {
+            color: red;
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        img {
+            max-width: 300px;
+            height: auto;
+            margin: 10px 0;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="date"></h1>
+    <p>It is advised not to eat non-vegetarian food today!</p>
+    <img src="https://via.placeholder.com/300x200.png?text=No+Non-Veg+Today" alt="No Non-Veg Today">
+    <img src="https://via.placeholder.com/300x200.png?text=Be+Kind+to+Animals" alt="Be Kind to Animals">
+    <img src="https://via.placeholder.com/300x200.png?text=Stay+Healthy" alt="Stay Healthy">
+    <script>
+        // Display today's date
+        const today = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('date').textContent = today.toLocaleDateString(undefined, options);
+    </script>
+</body>
+</html>
