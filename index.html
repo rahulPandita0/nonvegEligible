@@ -1,49 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="icon" href="logo.jpg" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Today's Date and Message</title>
+    <title>Non-Veg Eligible</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
-            align-items: center;
             flex-direction: column;
+            align-items: center;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            color: #fff;
             height: 100vh;
-            background-color: #f9f9f9;
         }
+
+        .logo {
+            margin: 20px;
+            text-align: center;
+        }
+
+        .logo img {
+            width: 100px;
+            border-radius: 50%;
+        }
+
         h1 {
-            margin: 10px 0;
-            color: #333;
+            font-size: 2em;
+            margin: 20px 0;
         }
+
         p {
-            color: red;
             font-size: 1.2em;
             margin: 10px 0;
         }
-        img {
-            max-width: 300px;
-            height: auto;
-            margin: 10px 0;
+
+        p#message {
+            color: #f8d7da;
+            background: #721c24;
+            padding: 10px 20px;
             border-radius: 10px;
+        }
+
+        p#normalMessage {
+            color: #d4edda;
+            background: #155724;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            width: 80%;
+            margin-top: 20px;
+        }
+
+        img {
+            max-width: 30%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        img:hover {
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
+    <!-- <div class="logo"> -->
+        <!-- <img src="logo.jpg" alt="Logo" /> -->
+        <!-- <h2></h2> -->
+    <!-- </div> -->
     <h1 id="date"></h1>
-    <p>It is advised not to eat non-vegetarian food today!</p>
-    <img src="https://via.placeholder.com/300x200.png?text=No+Non-Veg+Today" alt="No Non-Veg Today">
-    <img src="https://via.placeholder.com/300x200.png?text=Be+Kind+to+Animals" alt="Be Kind to Animals">
-    <img src="https://via.placeholder.com/300x200.png?text=Stay+Healthy" alt="Stay Healthy">
+    <p id="message" style="display: none;"></p>
+    <div id="specialImages" class="image-container" style="display: none;">
+        <img id="image1" src="nononveg.jpg" alt="No Non-Veg Today">
+        <img id="image2" src="bekind.jpg" alt="Be Kind to Animals">
+        <img id="image3" src="peace.jpg" alt="Stay Healthy">
+    </div>
+
+    <!-- Alternative Message and Images if it's a normal day -->
+    <p id="normalMessage" style="display: none;">You can eat anything as per your preference!</p>
+    <div id="normalImages" class="image-container" style="display: none;">
+        <img id="normalImage1" src="eatAsYOUlIKE.jpg" alt="Eat Anything">
+        <img id="normalImage2" src="foodontable.jpg" alt="Enjoy Your Meal">
+        <img id="normalImage3" src="eateverything.jpg" alt="Stay Happy">
+    </div>
+
     <script>
-        // Display today's date
         const today = new Date();
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         document.getElementById('date').textContent = today.toLocaleDateString(undefined, options);
+
+        // Dates for reasons
+        const specialDates = {
+            purnima: ["2025-01-13", "2025-02-12", "2025-03-14", "2025-04-12", "2025-05-12", "2025-06-11", "2025-07-10", "2025-08-09", "2025-09-07", "2025-10-07", "2025-11-05", "2025-12-04"],
+            amavasya: ["2025-01-29", "2025-02-27", "2025-03-29", "2025-04-27", "2025-05-27", "2025-06-25", "2025-07-24", "2025-08-23", "2025-09-21", "2025-10-21", "2025-11-20", "2025-12-19"],
+            ashtamiShukla: ["2025-01-07", "2025-02-05", "2025-03-06", "2025-04-05", "2025-05-05", "2025-06-03", "2025-07-03", "2025-08-01", "2025-08-31", "2025-09-30", "2025-10-30", "2025-11-28", "2025-12-28"],
+            ashtamiKrishna: ["2025-01-21", "2025-02-20", "2025-03-22", "2025-04-20", "2025-05-20", "2025-06-18", "2025-07-17", "2025-08-16", "2025-09-14", "2025-10-13", "2025-11-12", "2025-12-11"],
+            ekadashiShukla: ["2025-01-09", "2025-02-08", "2025-03-09", "2025-04-08", "2025-05-07", "2025-06-06", "2025-07-06", "2025-08-04", "2025-09-03", "2025-10-03", "2025-11-01", "2025-12-30"],
+            ekadashiKrishna: ["2025-01-25", "2025-02-23", "2025-03-25", "2025-04-23", "2025-05-23", "2025-06-22", "2025-07-21", "2025-08-20", "2025-09-19", "2025-10-19", "2025-11-17", "2025-12-15"]
+        };
+
+        const todayFormatted = today.toISOString().split("T")[0];
+
+        // Check if today matches any special date
+        let matchingDateType = null;
+
+        for (const [type, dates] of Object.entries(specialDates)) {
+            if (dates.includes(todayFormatted)) {
+                matchingDateType = type; // Set the matching type
+                break;
+            }
+        }
+
+        if (matchingDateType) {
+            const readableType = matchingDateType
+                .replace("purnima", "Purnima")
+                .replace("amavasya", "Amavasya")
+                .replace("ashtamiShukla", "Ashtami Shukla")
+                .replace("ashtamiKrishna", "Ashtami Krishna")
+                .replace("ekadashiShukla", "Ekadashi Shukla")
+                .replace("ekadashiKrishna", "Ekadashi Krishna");
+
+            document.getElementById('message').textContent = `It is ${readableType} today. It is advised not to eat non-vegetarian food!`;
+            document.getElementById('message').style.display = "block";
+            document.getElementById('specialImages').style.display = "flex";
+        } else {
+            document.getElementById('normalMessage').style.display = "block";
+            document.getElementById('normalImages').style.display = "flex";
+        }
     </script>
 </body>
 </html>
